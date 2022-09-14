@@ -3,7 +3,7 @@
 
 import * as React from 'react'
 
-const useLocalStorageState = initialName => {
+export const useLocalStorageState = initialName => {
   const [name, setName] = React.useState(
     () => window.localStorage.getItem('name') ?? initialName,
   )

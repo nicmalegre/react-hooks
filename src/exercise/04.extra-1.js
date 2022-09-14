@@ -1,10 +1,16 @@
 // useState: tic tac toe
 // http://localhost:3000/isolated/exercise/04.js
 
+// 👨‍💼 Our customers want to be able to pause a game, close the tab, and then resume the game later.
+// Can you store the game's state in localStorage?
+
 import * as React from 'react'
 
 function Board() {
-  const [squares, setSquares] = React.useState(Array(9).fill(null))
+  const [squares, setSquares] = React.useState(
+    () =>
+      JSON.parse(window.localStorage.getItem('squares')) ?? Array(9).fill(null),
+  )
 
   const nextValue = calculateNextValue(squares)
   const winner = calculateWinner(squares)
@@ -24,6 +30,10 @@ function Board() {
 
   function restart() {
     setSquares(Array(9).fill(null))
+  }
+
+  function pause() {
+    window.localStorage.setItem('squares', JSON.stringify(squares))
   }
 
   function renderSquare(i) {
@@ -52,6 +62,9 @@ function Board() {
         {renderSquare(7)}
         {renderSquare(8)}
       </div>
+      <button className="restart" onClick={pause}>
+        pause
+      </button>
       <button className="restart" onClick={restart}>
         restart
       </button>
