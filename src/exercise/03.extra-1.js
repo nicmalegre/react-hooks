@@ -1,18 +1,25 @@
 // Lifting state
 // http://localhost:3000/isolated/exercise/03.js
 
+// 👨‍💼 Peter told us that now users only want the animal displayed instead of the name
+
 import * as React from 'react'
 
-function Name({name, onNameChange}) {
+function Name() {
+  const [name, setName] = React.useState('')
+
   return (
     <div>
       <label htmlFor="name">Name: </label>
-      <input id="name" value={name} onChange={onNameChange} />
+      <input
+        id="name"
+        value={name}
+        onChange={event => setName(event.target.value)}
+      />
     </div>
   )
 }
 
-// 🐨 accept `animal` and `onAnimalChange` props to this component
 function FavoriteAnimal({animal, onAnimalChange}) {
   return (
     <div>
@@ -26,21 +33,17 @@ function FavoriteAnimal({animal, onAnimalChange}) {
   )
 }
 
-function Display({name, animal}) {
-  return <div>{`Hey ${name}, your favorite animal is: ${animal}!`}</div>
+function Display({animal}) {
+  return <div>{`Your favorite animal is: ${animal}!`}</div>
 }
 
 function App() {
-  // 🐨 add a useState for the animal
   const [animal, setAnimal] = React.useState('')
-  const [name, setName] = React.useState('')
   return (
     <form>
-      <Name name={name} onNameChange={event => setName(event.target.value)} />
-      {/* 🐨 pass the animal and onAnimalChange prop here (similar to the Name component above) */}
+      <Name />
       <FavoriteAnimal animal={animal} onAnimalChange={setAnimal} />
-      {/* 🐨 pass the animal prop here */}
-      <Display name={name} animal={animal} />
+      <Display animal={animal} />
     </form>
   )
 }
